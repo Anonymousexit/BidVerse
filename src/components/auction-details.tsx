@@ -34,16 +34,17 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
   return (
     <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-0">
       <div className="grid md:grid-cols-2">
-        <div className="p-2">
-          <Image
-            src="/images/chair.jpeg"
-            alt="Chairman's Seat"
-            width={100}
-            height={100}
-            className="w-full h-full object-cover rounded-md"
-          />
-        
-        </div>  
+        <div className="p-2 flex items-start">
+          <div className="w-[400px] h-[400px] relative">
+            <Image
+              src="/images/chair.jpeg"
+              alt="Chairman's Seat"
+              fill
+              sizes="(max-width: 1024px) 100vw, 700px"
+              className="object-cover rounded-md"
+            />
+          </div>
+        </div>
         <div className="p-6 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-4">
