@@ -48,6 +48,7 @@ export function useAuctionSimulation(config: AuctionConfig) {
 
     const now = Date.now();
     setHighestBid(amount);
+    setTimeLeft(config.duration); // Reset timer on new bid
     setBidHistory(prev => [...prev, { bidderId, amount, timestamp: now }]);
     
     const placingBidder = bidders.find(b => b.id === bidderId);
@@ -76,52 +77,12 @@ export function useAuctionSimulation(config: AuctionConfig) {
           clearInterval(interval);
           return 0;
         }
-
-        if (prev === 61) {
-            toast({
-              title: "1 Minute Left",
-              description: "The auction is ending soon!",
-            });
-        }
-        
-        if (prev === 11) {
-            toast({
-              variant: "destructive",
-              title: "10 Seconds Left!",
-              description: "Get your final bids in now!",
-            });
-        }
-
         return prev - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [status, bidders, placeBid, userBidderId, highestBid, config.bidIncrement, toast]);
+  }, [status]);
   
-  useEffect(() => {
-    if (status !== 'running' || bidders.length === 0 || !bidHistory.length) return;
-
-    const biddersWithoutPrediction = bidders.filter(b => b.id !== userBidderId && !b.predictedAction);
-    if (biddersWithoutPrediction.length === 0) return;
-
-    const randomBidder = biddersWithoutPrediction[Math.floor(Math.random() * biddersWithoutPrediction.length)];
-    if (!randomBidder) return;
-
-    const predictionInput = {
-      auctionId: 'classic-car-auction',
-      bidderId: randomBidder.id,
-      currentBid: highestBid,
-      timeRemaining: timeLeft,
-      bidHistory: bidHistory.map(b => ({ ...b }))
-    };
-
-    getBidderPrediction(predictionInput).then(prediction => {
-      setBidders(prev => prev.map(b => b.id === randomBidder.id ? {...b, predictedAction: prediction.predictedAction, confidence: prediction.confidence} : b));
-      setTimeout(() => {
-        setBidders(prev => prev.map(b => b.id === randomBidder.id ? {...b, predictedAction: undefined, confidence: undefined} : b));
-      }, 5000 + Math.random() * 5000);
-    });
-  }, [bidHistory, status, bidders, timeLeft, highestBid, userBidderId]);
 
   useEffect(() => {
     if (status === 'ended') {

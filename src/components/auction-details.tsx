@@ -23,7 +23,7 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
   const seconds = timeLeft % 60;
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-0">
       <div className="grid md:grid-cols-2">
         <div className="p-2">
           <Image

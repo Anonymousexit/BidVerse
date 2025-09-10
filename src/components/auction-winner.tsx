@@ -20,18 +20,22 @@ export default function AuctionWinner({ winner, winningBid, currency, onRestart,
     const [isExploding, setIsExploding] = useState(false);
 
     useEffect(() => {
-      if (winner) {
-        setIsExploding(true);
-      }
+      // Use a timeout to ensure the component has mounted and is visible
+      const timer = setTimeout(() => {
+        if (winner) {
+          setIsExploding(true);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
     }, [winner]);
     
     const confettiConfig = {
         angle: 90,
         spread: 360,
         startVelocity: 40,
-        elementCount: 70,
+        elementCount: 200,
         dragFriction: 0.12,
-        duration: 3000,
+        duration: 5000,
         stagger: 3,
         width: "10px",
         height: "10px",
@@ -40,10 +44,10 @@ export default function AuctionWinner({ winner, winningBid, currency, onRestart,
 
     return (
         <div className="flex items-center justify-center min-h-[70vh] relative">
-             <div className="absolute top-1/2 left-1/2">
+             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Confetti active={isExploding} config={confettiConfig} />
             </div>
-            <Card className="w-full max-w-md text-center animate-in zoom-in-95 duration-500">
+            <Card className="w-full max-w-md text-center animate-in zoom-in-95 duration-500 bg-card/80 backdrop-blur-sm border-0">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
                         <PartyPopper className="h-10 w-10 text-primary" />
@@ -55,7 +59,7 @@ export default function AuctionWinner({ winner, winningBid, currency, onRestart,
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {winner ? (
-                        <div className="space-y-2 p-4 bg-muted rounded-lg">
+                        <div className="space-y-2 p-4 bg-muted/50 rounded-lg">
                             <p className="text-lg font-semibold">{winner.name}</p>
                             <p className="text-sm text-muted-foreground">Won with a final bid of</p>
                             <p className="text-4xl font-bold text-primary">
@@ -67,7 +71,7 @@ export default function AuctionWinner({ winner, winningBid, currency, onRestart,
                     )}
                 </CardContent>
                 <CardFooter>
-                    <Button onClick={onRestart} className="w-full" variant="default">
+                    <Button onClick={onRestart} className="w-full" variant="secondary">
                         <RefreshCcw />
                         Start New Auction
                     </Button>

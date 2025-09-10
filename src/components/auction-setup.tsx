@@ -35,7 +35,7 @@ const setupSchema = z.object({
   currency: z.enum(currencies),
   minBid: z.coerce.number().positive("Minimum bid must be positive."),
   bidIncrement: z.coerce.number().positive("Bid increment must be positive."),
-  duration: z.coerce.number().int().min(60, "Duration must be at least 60 seconds.").max(3600, "Max 1 hour."),
+  duration: z.coerce.number().int().min(10, "Duration must be at least 10 seconds.").max(3600, "Max 1 hour."),
 });
 
 interface AuctionSetupProps {
@@ -48,7 +48,10 @@ export default function AuctionSetup({ initialConfig, onStartAuction }: AuctionS
   
   const form = useForm<z.infer<typeof setupSchema>>({
     resolver: zodResolver(setupSchema),
-    defaultValues: initialConfig,
+    defaultValues: {
+      ...initialConfig,
+      duration: 30, // Default duration to 30 seconds
+    },
   });
 
   const onSubmit = (values: z.infer<typeof setupSchema>) => {
@@ -60,7 +63,7 @@ export default function AuctionSetup({ initialConfig, onStartAuction }: AuctionS
   return (
     <div className="grid md:grid-cols-2 gap-8 items-start">
         <div className="flex flex-col gap-4">
-             <Card>
+             <Card className="bg-card/80 backdrop-blur-sm border-0">
                 <CardHeader>
                     <CardTitle className="font-headline text-2xl">Vintage Sports Car</CardTitle>
                     <CardDescription>A beautifully restored 1965 classic sports car. A true collector's item.</CardDescription>
@@ -79,7 +82,7 @@ export default function AuctionSetup({ initialConfig, onStartAuction }: AuctionS
                 </CardContent>
             </Card>
         </div>
-        <Card className="w-full">
+        <Card className="w-full bg-card/80 backdrop-blur-sm border-0">
         <CardHeader>
             <CardTitle>Configure Your Auction</CardTitle>
             <CardDescription>Set the parameters for the live auction simulation.</CardDescription>

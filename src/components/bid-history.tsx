@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { formatCurrency, convertCurrency } from '@/lib/currency';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from './ui/badge';
+import { Gavel } from 'lucide-react';
 
 interface BidHistoryProps {
   bidHistory: Bid[];
@@ -22,7 +23,7 @@ export default function BidHistory({ bidHistory, bidders, currency, config }: Bi
   const reversedHistory = [...bidHistory].reverse();
 
   return (
-    <Card>
+    <Card className="bg-card/80 backdrop-blur-sm border-0">
       <CardHeader>
         <CardTitle>Bid History</CardTitle>
         <CardDescription>A log of all bids placed in the auction.</CardDescription>
@@ -45,7 +46,8 @@ export default function BidHistory({ bidHistory, bidders, currency, config }: Bi
                   </p>
                 </div>
                 <div className="text-right">
-                    <Badge variant={index === 0 ? "default" : "secondary"} className="text-sm">
+                    <Badge variant={index === 0 ? "default" : "secondary"} className="text-sm font-mono">
+                         <Gavel className="h-3 w-3 mr-1" />
                         {formatCurrency(convertCurrency(bid.amount, config.currency, currency), currency)}
                     </Badge>
                 </div>

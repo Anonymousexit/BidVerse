@@ -11,7 +11,7 @@ export default function Header() {
           Bid<span className="text-primary">Verse</span>
         </h1>
       </div>
-      <p className="text-muted-foreground hidden md:block">The future of online auctions.</p>
+      <p className="text-muted-foreground hidden md:block backdrop-blur-sm">The future of online auctions.</p>
     </header>
   );
 }
