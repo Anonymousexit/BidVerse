@@ -2,19 +2,28 @@
 
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { formatCurrency, currencies, convertCurrency } from '@/lib/currency';
 import type { useAuctionSimulation } from '@/hooks/use-auction-simulation';
 import type { AuctionConfig } from '@/lib/types';
 import PlaceBidForm from './place-bid-form';
 import { placeholderImages } from '@/lib/placeholder-images.json';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Timer, Landmark, Users } from 'lucide-react';
+import { Timer, Landmark, Users, Droplets, MonitorPlay, Lightbulb, ShieldCheck, EarOff } from 'lucide-react';
 
 type AuctionDetailsProps = {
   auction: ReturnType<typeof useAuctionSimulation>;
   config: AuctionConfig;
 };
+
+const qualities = [
+    { name: "Nearness to the Water dispenser", icon: Droplets, rating: "10/10" },
+    { name: "Ambience", icon: Lightbulb, rating: "10/10" },
+    { name: "Perfect lighting", icon: Lightbulb, rating: "10/10" },
+    { name: "Ease of access to the television", icon: MonitorPlay, rating: "10/10" },
+    { name: "Privacy", icon: ShieldCheck, rating: "10/10" },
+    { name: "No disturbances", icon: EarOff, rating: "10/10" },
+]
 
 export default function AuctionDetails({ auction, config }: AuctionDetailsProps) {
   const { timeLeft, highestBid, placeBid, userBidderId, displayCurrency, setDisplayCurrency, bidders } = auction;
@@ -37,13 +46,14 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
         </div>
         <div className="p-6 flex flex-col justify-between">
           <div>
-            <div className="flex justify-between items-start mb-6">
-              <h2 className="font-headline text-3xl font-bold">Vintage Sports Car</h2>
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="font-headline text-3xl font-bold">The Chairman's Seat</h2>
               <Select onValueChange={(value) => setDisplayCurrency(value as any)} defaultValue={displayCurrency}>
                 <SelectTrigger className="w-[100px]"><SelectValue placeholder="Currency" /></SelectTrigger>
                 <SelectContent>{currencies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+            <p className="text-muted-foreground mb-6">The ultimate ergonomic office chair, positioned for maximum comfort and productivity.</p>
 
             <div className="space-y-4">
               <div className="flex justify-between items-baseline bg-primary/10 p-4 rounded-lg">
@@ -79,6 +89,20 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
           </div>
         </div>
       </div>
+       <CardContent className="p-6">
+        <h3 className="text-xl font-bold mb-4">Key Qualities</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+            {qualities.map(quality => (
+                <div key={quality.name} className="flex items-center gap-3 bg-muted/50 p-3 rounded-lg">
+                    <quality.icon className="h-5 w-5 text-primary"/>
+                    <div>
+                        <p className="font-semibold text-foreground">{quality.name}</p>
+                        <p className="text-primary font-bold">{quality.rating}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+      </CardContent>
     </Card>
   );
 }

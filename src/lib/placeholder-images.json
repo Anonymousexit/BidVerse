@@ -1,10 +1,10 @@
 {
   "placeholderImages": [
     {
-      "id": "classic-car",
-      "description": "A classic red sports car parked in front of a modern building.",
-      "imageUrl": "https://picsum.photos/seed/car1/800/600",
-      "imageHint": "classic car"
+      "id": "office-chair",
+      "description": "A comfortable ergonomic office chair in a modern office setting.",
+      "imageUrl": "https://picsum.photos/seed/chair2/800/600",
+      "imageHint": "office chair"
     }
   ]
 }

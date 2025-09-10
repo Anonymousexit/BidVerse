@@ -50,7 +50,9 @@ export default function AuctionSetup({ initialConfig, onStartAuction }: AuctionS
     resolver: zodResolver(setupSchema),
     defaultValues: {
       ...initialConfig,
-      duration: 30, // Default duration to 30 seconds
+      minBid: 100,
+      bidIncrement: 10,
+      duration: 60, 
     },
   });
 
@@ -65,8 +67,8 @@ export default function AuctionSetup({ initialConfig, onStartAuction }: AuctionS
         <div className="flex flex-col gap-4">
              <Card className="bg-card/80 backdrop-blur-sm border-0">
                 <CardHeader>
-                    <CardTitle className="font-headline text-2xl">Vintage Sports Car</CardTitle>
-                    <CardDescription>A beautifully restored 1965 classic sports car. A true collector's item.</CardDescription>
+                    <CardTitle className="font-headline text-2xl">The Chairman's Seat</CardTitle>
+                    <CardDescription>The ultimate ergonomic office chair, positioned for maximum comfort and productivity.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="aspect-video overflow-hidden rounded-lg border">

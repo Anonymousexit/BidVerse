@@ -31,7 +31,12 @@ export function useAuctionSimulation(config: AuctionConfig) {
     }));
     newBidders.push({ id: userBidderId, name: 'You', currentBid: 0, isWinning: false });
     setBidders(newBidders);
-  }, [config.numBidders, userBidderId]);
+    setHighestBid(config.minBid);
+    setTimeLeft(config.duration);
+    setStatus('running');
+    setBidHistory([]);
+    setWinner(null);
+  }, [config, userBidderId]);
 
   const placeBid = useCallback((bidderId: string, amount: number) => {
     if (status !== 'running') return false;
@@ -69,19 +74,17 @@ export function useAuctionSimulation(config: AuctionConfig) {
   }, [status, highestBid, config, bidders, userBidderId, toast, displayCurrency]);
 
   useEffect(() => {
-    if (status !== 'running') return;
+    if (status !== 'running' || timeLeft <= 0) {
+      if(timeLeft <= 0 && status === 'running') {
+        setStatus('ended');
+      }
+      return;
+    };
     const interval = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) {
-          setStatus('ended');
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeLeft(prev => prev - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [status]);
+  }, [status, timeLeft]);
   
 
   useEffect(() => {
@@ -90,13 +93,15 @@ export function useAuctionSimulation(config: AuctionConfig) {
       if (winningBid) {
         const winnerInfo = bidders.find(b => b.id === winningBid.bidderId);
         setWinner(winnerInfo || null);
-        toast({
-            title: "Auction Ended!",
-            description: `${winnerInfo?.name || 'Someone'} won with a bid of ${formatCurrency(convertCurrency(winningBid.amount, config.currency, displayCurrency), displayCurrency)}.`,
-        });
+        if(winnerInfo) {
+          toast({
+              title: "Auction Ended!",
+              description: `${winnerInfo.name} won with a bid of ${formatCurrency(convertCurrency(winningBid.amount, config.currency, displayCurrency), displayCurrency)}.`,
+          });
+        }
       } else {
+        setWinner(null);
         toast({
-            variant: "destructive",
             title: "Auction Ended",
             description: "No bids were placed.",
         });
