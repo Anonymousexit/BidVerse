@@ -92,14 +92,6 @@ export function useAuctionSimulation(config: AuctionConfig) {
             });
         }
 
-        if (Math.random() < 0.1) {
-          const potentialBidders = bidders.filter(b => b.id !== userBidderId && !b.isWinning);
-          if (potentialBidders.length > 0) {
-            const randomBidder = potentialBidders[Math.floor(Math.random() * potentialBidders.length)];
-            const bidAmount = Math.ceil((highestBid + config.bidIncrement + Math.random() * config.bidIncrement * 3) / 10) * 10;
-            placeBid(randomBidder.id, bidAmount);
-          }
-        }
         return prev - 1;
       });
     }, 1000);
