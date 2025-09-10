@@ -40,7 +40,7 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
               src="/images/chair.jpeg"
               alt="Chairman's Seat"
               fill
-              sizes="(max-width: 1024px) 100vw, 700px"
+              sizes="(max-width: 768px) 200vw, 400px"
               className="object-cover rounded-md"
             />
           </div>
