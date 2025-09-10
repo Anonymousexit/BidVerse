@@ -38,8 +38,8 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
           <Image
             src="/images/chair.jpeg"
             alt="Chairman's Seat"
-            width={600}
-            height={600}
+            width={100}
+            height={100}
             className="w-full h-full object-cover rounded-md"
           />
         
