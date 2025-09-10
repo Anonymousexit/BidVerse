@@ -3,7 +3,7 @@
     {
       "id": "office-chair",
       "description": "A comfortable ergonomic office chair in a modern office setting.",
-      "imageUrl": "https://picsum.photos/seed/chair/800/600",
+      "imageUrl": "/images/chair.jpg",
       "imageHint": "office chair"
     }
   ]
