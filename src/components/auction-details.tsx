@@ -36,8 +36,8 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
       <div className="grid md:grid-cols-2">
         <div className="p-2">
           <Image
-            src="/chair.jpeg"  // Changed from placeholderImages[0].imageUrl
-            alt="Chairman's Seat"  // Updated alt text to be more specific
+            src="/images/chair.jpeg"
+            alt="Chairman's Seat"
             width={800}
             height={600}
             className="w-full h-full object-cover rounded-md"
