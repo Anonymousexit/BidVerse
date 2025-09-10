@@ -43,7 +43,7 @@ export default function AuctionDetails({ auction, config }: AuctionDetailsProps)
             className="w-full h-full object-cover rounded-md"
           />
         
-        </div>
+        </div>  
         <div className="p-6 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-4">
